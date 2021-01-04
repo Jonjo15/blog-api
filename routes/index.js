@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const User = require("../models/user")
 const bcrypt = require("bcryptjs")
+const passport = require("passport")
 const utils = require("../utils")
 const { body, validationResult } = require("express-validator");
 
@@ -10,6 +11,9 @@ router.get('/', function(req, res, next) {
   res.json({"message": "hi"});
 });
 
+router.get("/protected", passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
+});
 
 router.post("/register", [
   body('first_name', 'First Name required').trim().isLength({ min: 1 }).escape(),
@@ -55,24 +59,6 @@ router.post("/register", [
     });
 }]);
 
-// user
-//       .save()
-//       .then(user => {
-//         let tokenObject = utils.issueJWT(user)
-//         return res.json({success: true, user,token: tokenObject.token, expiresIn: tokenObject.expires, msg: "user created"})
-//       })
-//       .catch(err => {
-//         return res.json({success: false, msg: "failed to create user"})
-//       })
-// .save(function(err, user) {
-//   if (err) { 
-//     return res.json({success: false, msg: "failed to create user"})
-//   }
-//   else {
-//     const tokenObject = utils.issueJWT(user)
-//     return res.json({success: true, user,token: tokenObject.token, expiresIn: tokenObject.expires, msg: "user created"})
-//   }
-// });
 router.post("/login", (req, res, next) => {
   User.findOne({email: req.body.email})
   .then(user => {
