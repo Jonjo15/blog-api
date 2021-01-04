@@ -3,7 +3,7 @@ var router = express.Router();
 const User = require("../models/user")
 const bcrypt = require("bcryptjs")
 const utils = require("../utils")
-const { body,validationResult } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -36,17 +36,34 @@ router.post("/register", [
         family_name: req.body.family_name,
         email: req.body.email,
         password: hashedPassword,
-      }).save()
-      .then(user => {
-        const tokenObject = utils.issueJWT(user)
-        return res.json({success: true, user,token: tokenObject.token, expiresIn: tokenObject.expires, msg: "user created"})
       })
-      .catch(err => {
-        return res.json({success: false, msg: "failed to create user"})
-      })
+      try {
+    
+        user.save()
+            .then((user) => {
+              let tokenObject = utils.issueJWT(user)
+              return res.json({success: true, user, token: tokenObject.token, expiresIn: tokenObject.expires, msg: "user created"})
+            });
+
+      } catch (err) {
+        
+        res.json({ success: false, msg: err });
+    
+      }
+
+      
     });
 }]);
 
+// user
+//       .save()
+//       .then(user => {
+//         let tokenObject = utils.issueJWT(user)
+//         return res.json({success: true, user,token: tokenObject.token, expiresIn: tokenObject.expires, msg: "user created"})
+//       })
+//       .catch(err => {
+//         return res.json({success: false, msg: "failed to create user"})
+//       })
 // .save(function(err, user) {
 //   if (err) { 
 //     return res.json({success: false, msg: "failed to create user"})
