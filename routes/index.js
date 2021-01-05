@@ -120,7 +120,7 @@ router.post("/posts", passport.authenticate('jwt', { session: false }), [
 }])
 
 router.get("/posts", passport.authenticate('jwt', { session: false }), (req, res, next) => {
-  Post.find({}, 'title body published')
+  Post.find({}, 'title body published comment_count')
       .populate('author')
       .exec(function (err, list_posts) {
         if (err) { return next(err); }
@@ -136,13 +136,15 @@ router.put("/posts/:postId", passport.authenticate('jwt', { session: false }), (
     })
 })
 
-router.delete("/posts/:postId",passport.authenticate('jwt', { session: false }) , (req, res, next) => {
+router.delete("/posts/:postId", passport.authenticate('jwt', { session: false }) , (req, res, next) => {
   Post.findByIdAndRemove(req.params.postId, function deletePost (err) {
     if (err) { return next(err); }
     res.status(200).json({success: true, msg: "post deleted successfully"})
   })
 
 })
+
+// router.get("/posts/:postId/comments", )
 module.exports = router;
 
 // bcrypt.compare(password, user.password, (err, res) => {
