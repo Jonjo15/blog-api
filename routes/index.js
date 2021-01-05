@@ -137,6 +137,22 @@ router.put("/posts/:postId", passport.authenticate('jwt', { session: false }), (
     })
 })
 
+router.put("/posts/:postId", passport.authenticate('jwt', { session: false }), [
+
+  body('title', 'Title required').trim().isLength({ min: 1 }).escape(),
+  body('body', 'Post Body required').trim().isLength({ min: 1 }).escape(),
+  (req, res, next ) => {
+
+    const errors = validationResult(req);
+    
+    if (!errors.isEmpty()) {
+      // There are errors. Render the form again with sanitized values/error messages.
+      res.status(401).json({success: false, msg: "input error"})
+      return;
+    }
+  }
+])
+
 router.delete("/posts/:postId", passport.authenticate('jwt', { session: false }) , (req, res, next) => {
   Post.findByIdAndRemove(req.params.postId, function deletePost (err) {
     if (err) { return next(err); }
