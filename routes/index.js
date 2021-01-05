@@ -135,6 +135,14 @@ router.put("/posts/:postId", passport.authenticate('jwt', { session: false }), (
     res.json({success: true, msg: "Blog post published"})
     })
 })
+
+router.delete("/posts/:postId",passport.authenticate('jwt', { session: false }) , (req, res, next) => {
+  Post.findByIdAndRemove(req.params.postId, function deletePost (err) {
+    if (err) { return next(err); }
+    res.status(200).json({success: true, msg: "post deleted successfully"})
+  })
+
+})
 module.exports = router;
 
 // bcrypt.compare(password, user.password, (err, res) => {
