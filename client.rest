@@ -16,12 +16,13 @@ Content-Type: application/json
     "author": "email@email.com",
     "body": "hehehehehhehe"
 }
-
+###
+GET http://localhost:4000/api/posts/5ff432632b5496680e892ae6/comments
 ###
 GET  http://localhost:4000/posts
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmYyZmJkODdjOTMzYjUwYTBiNGNjZWQiLCJpYXQiOjE2MDk4Mzg0MjkzMzF9._njiUsydcLTpODHjaSyTs64z72davxgN_CzIMViIuZ0
 
 ###
-DELETE   http://localhost:4000/posts/5ff43274726ce66814b3c6f7
+DELETE   http://localhost:4000/posts/5ff432632b5496680e892ae6/comments/5ff4462a2a88c50ee1e56c63
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmYyZmJkODdjOTMzYjUwYTBiNGNjZWQiLCJpYXQiOjE2MDk4Mzg0MjkzMzF9._njiUsydcLTpODHjaSyTs64z72davxgN_CzIMViIuZ0

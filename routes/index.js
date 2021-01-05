@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const User = require("../models/user")
 const Post = require("../models/post")
+const Comment = require("../models/comment")
 const bcrypt = require("bcryptjs")
 const passport = require("passport")
 const utils = require("../utils")
@@ -144,6 +145,18 @@ router.delete("/posts/:postId", passport.authenticate('jwt', { session: false })
 
 })
 
+router.delete("/posts/:postId/comments/:commentId", passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  Comment.findByIdAndRemove(req.params.commentId)
+  .then(() => {
+    return Post.findByIdAndUpdate(req.params.postId,  {$inc: {comment_count: -1}})
+  })
+  .then(() => {
+    return res.status(200).json({success: true, msg: "Comment saved and comment count decremented"})
+  })
+  .catch(err => {
+    res.status(401).json({success: false, msg: "Something went wrong"})
+  })
+})
 // router.get("/posts/:postId/comments", )
 module.exports = router;
 
