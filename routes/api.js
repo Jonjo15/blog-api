@@ -5,8 +5,14 @@ const Post = require("../models/post")
 const { body, validationResult } = require("express-validator");
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/posts', function(req, res, next) {
+  Post.find({published: true})
+  .populate("author", "first_name family_name email")
+  .exec(function (err, list_posts) {
+    if (err) { return next(err); }
+    //Successful, so render
+    res.status(200).json({published_posts: list_posts});
+  });
 });
 
 router.post("/posts/:postId", [

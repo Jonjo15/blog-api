@@ -24,7 +24,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmYyZmJkODdjOTMzYjUwYTBiNGNjZWQiLCJpYXQiOjE2MDk4Mzg0MjkzMzF9._njiUsydcLTpODHjaSyTs64z72davxgN_CzIMViIuZ0
 
 ###
-PUT   http://localhost:4000/posts/5ff432632b5496680e892ae6
+PUT   http://localhost:4000/posts/5ff432632b5496680e892ae6/update
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmYyZmJkODdjOTMzYjUwYTBiNGNjZWQiLCJpYXQiOjE2MDk4Mzg0MjkzMzF9._njiUsydcLTpODHjaSyTs64z72davxgN_CzIMViIuZ0
 
