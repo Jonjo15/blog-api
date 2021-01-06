@@ -15,18 +15,29 @@ router.get('/posts', function(req, res, next) {
   });
 });
 
-router.get("/posts/:postId", (req, res, next) => {
+router.get("/posts/:postId", async (req, res, next) => {
   let data = {}
-  Post.findById(req.params.postId)
-  .then(post => {
+
+  try {
+    const post = await Post.findById(req.params.postId).populate("author", "first_name family_name email")
     data.post = post;
-    return Comment.find({post: req.params.postId })
-  })
-  .then(comments => {
+    const comments = await Comment.find({post: req.params.postId})
     data.comments = comments;
     return res.status(200).json({success: true, post: data.post, comments: data.comments})
-  })
-  .catch(err => res.status(404).json({success: false, msg:"post doesnt exist"}))
+  }
+  catch {
+    return res.status(404).json({success: false, msg:"post doesnt exist"})
+  }
+  // Post.findById(req.params.postId)
+  // .then(post => {
+  //   data.post = post;
+  //   return Comment.find({post: req.params.postId })
+  // })
+  // .then(comments => {
+  //   data.comments = comments;
+    
+  // })
+  // .catch(err => res.status(404).json({success: false, msg:"post doesnt exist"}))
 })
 
 router.post("/posts/:postId", [
@@ -46,13 +57,14 @@ router.post("/posts/:postId", [
       created_at: Date.now(),
       post: req.params.postId
     })
-
+    let savedCom;
     comment.save()
     .then((com) => {
+      savedCom = com;
       return Post.findByIdAndUpdate(req.params.postId,  {$inc: {comment_count: 1}})
     })
     .then((post) => {
-      return res.status(200).json({success: true, msg: "Comment saved and comment count incremented"})
+      return res.status(200).json({success: true, comment: savedCom,  msg: "Comment saved and comment count incremented"})
     })
     .catch(err => {
       res.status(401).json({success: false, msg: "Something went wrong"})

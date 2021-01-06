@@ -13,18 +13,22 @@ POST http://localhost:4000/api/posts/5ff432632b5496680e892ae6
 Content-Type: application/json
 
 {
-    "author": "email@email.com",
-    "body": "hehehehehhehe"
+    "author": "baturini",
+    "body": "Lorem ipsum comment tipsum"
 }
 ###
-GET http://localhost:4000/api/posts/5ff432632b5496680e892ae6/comments
+GET http://localhost:4000/api/posts/5ff432632b5496680e892ae6/
 ###
-GET  http://localhost:4000/posts
+POST   http://localhost:4000/posts
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmYyZmJkODdjOTMzYjUwYTBiNGNjZWQiLCJpYXQiOjE2MDk4Mzg0MjkzMzF9._njiUsydcLTpODHjaSyTs64z72davxgN_CzIMViIuZ0
 
+{
+    "title": "TEST",
+    "body": "Lorem ipsum kasdlasdlksalkdlksalkkldlak"
+}
 ###
-PUT   http://localhost:4000/posts/5ff432632b5496680e892ae6/update
+PUT   http://localhost:4000/posts/5ff4cf19af041d3169dcf430/
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmYyZmJkODdjOTMzYjUwYTBiNGNjZWQiLCJpYXQiOjE2MDk4Mzg0MjkzMzF9._njiUsydcLTpODHjaSyTs64z72davxgN_CzIMViIuZ0
 
