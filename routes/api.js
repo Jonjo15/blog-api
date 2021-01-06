@@ -15,6 +15,20 @@ router.get('/posts', function(req, res, next) {
   });
 });
 
+router.get("/posts/:postId", (req, res, next) => {
+  let data = {}
+  Post.findById(req.params.postId)
+  .then(post => {
+    data.post = post;
+    return Comment.find({post: req.params.postId })
+  })
+  .then(comments => {
+    data.comments = comments;
+    return res.status(200).json({success: true, post: data.post, comments: data.comments})
+  })
+  .catch(err => res.status(404).json({success: false, msg:"post doesnt exist"}))
+})
+
 router.post("/posts/:postId", [
   body('author', 'Author required').trim().isLength({ min: 1 }).escape(),
   body('body', 'Post Body required').trim().isLength({ min: 1 }).escape(),
