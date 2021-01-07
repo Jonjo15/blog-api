@@ -10,7 +10,7 @@ const issueJWT = (user) => {
         iat: Date.now()
     }
     // const signedToken = jwt.sign(payload, process.env.SECRET_KEY, {expiresIn, algorithm: "RS256"})
-    let token = jwt.sign(payload, process.env.SECRET_KEY);
+    let token = jwt.sign(payload, process.env.SECRET_KEY, {expiresIn});
     return {
         token: "Bearer " + token,
         expires: expiresIn
