@@ -130,6 +130,25 @@ router.get("/posts", passport.authenticate('jwt', { session: false }), (req, res
       });
 })
 
+router.get("/user", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+      const user = await User.findById(req.user.id).select("-password")
+      if (!user) throw Error("User does not exist")
+      res.json({user})
+    }
+    catch (e) {
+      res.status(400).json({msg: e.message})
+    }
+})
+// router.get('/user', passport.authenticate('jwt', { session: false }), async (req, res) => {
+//   try {
+//     const user = await User.findById(req.user.id).select('-password');
+//     if (!user) throw Error('User does not exist');
+//     res.json(user);
+//   } catch (e) {
+//     res.status(400).json({ msg: e.message });
+//   }
+// });
 router.put("/posts/:postId", passport.authenticate('jwt', { session: false }), (req, res, next) => {
   Post.findByIdAndUpdate(req.params.postId, { published: true}, function updateUser(err) {
     if (err) {return next(err)}
