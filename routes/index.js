@@ -24,7 +24,7 @@ router.post("/register", [
   body("email","Email Addres must be valid").normalizeEmail().isEmail(),
   body('password', 'Password required').trim().isLength({ min: 4 }).escape(),
 
-  (req, res, next) => {
+  async (req, res, next) => {
 
     const errors = validationResult(req);
 
@@ -34,6 +34,14 @@ router.post("/register", [
       res.status(401).json({success: false, msg: "input error"})
       return;
     }
+    try {
+      const user = await User.findOne({ email: req.body.email });
+      if (user) throw Error('User already exists');
+    }
+    catch (e) {
+      res.status(400).json({msg: e.message})
+    }
+
     bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
       // if err, do something
       // otherwise, store hashedPassword in DB
@@ -47,8 +55,14 @@ router.post("/register", [
     
         user.save()
             .then((user) => {
+              const userObj = {
+                first_name: user.first_name,
+                family_name: user.family_name,
+                email: user.email,
+                id: user._id
+              }
               let tokenObject = utils.issueJWT(user)
-              return res.json({success: true, user, token: tokenObject.token, expiresIn: tokenObject.expires, msg: "user created"})
+              return res.json({success: true, user: userObj, token: tokenObject.token, expiresIn: tokenObject.expires, msg: "user created"})
             });
 
       } catch (err) {
