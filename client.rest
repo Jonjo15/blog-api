@@ -3,9 +3,10 @@ POST http://localhost:4000/register
 Content-Type: application/json
 
 {
-    "first_name": "SVAN",
-    "family_name": "BATUR",
-    
+    "first_name": "test",
+    "family_name": "test",
+    "email": "ivan@ivan.com",
+    "password": "123456"
 }
 
 ###
@@ -19,16 +20,17 @@ Content-Type: application/json
 ###
 GET http://localhost:4000/api/posts/5ff432632b5496680e892ae6/
 ###
-POST   http://localhost:4000/posts
-Content-Type: application/json
+POST http://localhost:4000/posts
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmYyZmJkODdjOTMzYjUwYTBiNGNjZWQiLCJpYXQiOjE2MDk4Mzg0MjkzMzF9._njiUsydcLTpODHjaSyTs64z72davxgN_CzIMViIuZ0
+Content-Type: application/json
 
 {
-    "title": "TEST",
-    "body": "Lorem ipsum kasdlasdlksalkdlksalkkldlak"
+    "title": "test rest",
+    "body": "Lorem ipsum comment tipsum"
 }
+
 ###
-PUT   http://localhost:4000/posts/5ff4cf19af041d3169dcf430/
+PUT   http://localhost:4000/posts/5ffc19e6dbc24301f7005f30/update
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmYyZmJkODdjOTMzYjUwYTBiNGNjZWQiLCJpYXQiOjE2MDk4Mzg0MjkzMzF9._njiUsydcLTpODHjaSyTs64z72davxgN_CzIMViIuZ0
 

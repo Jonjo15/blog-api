@@ -163,10 +163,16 @@ router.get("/user", passport.authenticate('jwt', { session: false }), async (req
 //     res.status(400).json({ msg: e.message });
 //   }
 // });
-router.put("/posts/:postId", passport.authenticate('jwt', { session: false }), (req, res, next) => {
+router.put("/posts/:postId/publish", passport.authenticate('jwt', { session: false }), (req, res, next) => {
   Post.findByIdAndUpdate(req.params.postId, { published: true}, function updateUser(err) {
     if (err) {return next(err)}
     res.json({success: true, msg: "Blog post published"})
+    })
+})
+router.put("/posts/:postId/unpublish", passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  Post.findByIdAndUpdate(req.params.postId, { published: false}, function updateUser(err) {
+    if (err) {return next(err)}
+    res.json({success: true, msg: "Blog post unpublished"})
     })
 })
 
